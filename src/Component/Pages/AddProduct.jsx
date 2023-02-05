@@ -1,4 +1,4 @@
-import axios from "axios";
+// import axios from "axios";
 import { useState } from "react"
 
 
@@ -14,15 +14,28 @@ function AddProduct(){
         let name = e.target.name;
         let value = e.target.value;
         setProduct({...product, [name]:value})
-        console.log(product)
     }
-axio
+// axio
     const submitData = (e) => {
         e.preventDefault()
-        
-        axios.post('/api/product, 
-        
+        if (!localStorage.getItem('products')) {
+            const productInputDetails = JSON.stringify([{'title' : product.title , 'price' : product.price , 'thumbnail' : product.image}]);
+            // localStorage.setItem('products', `${+ productInputDetails}`)
+            localStorage.setItem('products', productInputDetails)
+            return console.log(localStorage.getItem('products'))
+        }
+
+        let newArray = []
+        let getProductDetails = localStorage.getItem('products')
+        let parseProductDetails = JSON.parse(getProductDetails)
+        parseProductDetails.push({title : product.title , price : product.price , thumbnail : product.image});
+        localStorage.setItem('products', JSON.stringify(parseProductDetails))
+
+        console.log(parseProductDetails)
+        // console.log(parseProductDetails.push({title:"egg"}))
+
     }
+
 
 
     return(
@@ -31,34 +44,33 @@ axio
             <br/>
 
             <div className="container">
-                <div class="row justify-content-center">
+                <div className="row justify-content-center">
                 <div className="col-lg-4 col-md-5 col-sm-8">
 
-                <form action="" >
-
+                <form>
                     <legend className="col-form-legend text-center">Add Product :</legend>
 
-                    <div class="mb-3">
-                      <label for="productTitle" class="form-label">Product Title</label>
-                      <input type="text" name="title" id="productTitle" class="form-control" placeholder="Product title" aria-describedby="productTitleDesc" onChange={dataHandling} />
-                      {/* <small id="productTitleDesc" class="text-muted">Product title here</small> */}
+                    <div className="mb-3">
+                      <label for="productTitle" className="form-label">Product Title</label>
+                      <input type="text" name="title" id="productTitle" className="form-control" placeholder="Product title" aria-describedby="productTitleDesc" onChange={dataHandling} />
+                      {/* <small id="productTitleDesc" className="text-muted">Product title here</small> */}
                     </div>
 
-                    <div class="mb-3">
-                      <label for="productPrice" class="form-label">Product Price :</label>
-                      <input type="number" name="price" id="productPrice" class="form-control" placeholder="Product price" aria-describedby="productPriceDesc" onChange={dataHandling} />
-                      {/* <small id="productPriceDesc" class="text-muted">Product price here</small> */}
+                    <div className="mb-3">
+                      <label for="productPrice" className="form-label">Product Price :</label>
+                      <input type="number" name="price" id="productPrice" className="form-control" placeholder="Product price" aria-describedby="productPriceDesc" onChange={dataHandling} />
+                      {/* <small id="productPriceDesc" className="text-muted">Product price here</small> */}
                     </div>
 
-                    <div class="mb-3">
-                      <label for="productImage" class="form-label">Image Link :</label>
-                      <input type="url" name="image" id="productImage" class="form-control" placeholder="Paste your image link here" aria-describedby="productImageDesc" onChange={dataHandling} />
-                      {/* <small id="productImageDesc" class="text-muted">Image Link here</small> */}
+                    <div className="mb-3">
+                      <label for="productImage" className="form-label">Image Link :</label>
+                      <input type="url" name="image" id="productImage" className="form-control" placeholder="Paste your image link here" aria-describedby="productImageDesc" onChange={dataHandling} />
+                      {/* <small id="productImageDesc" className="text-muted">Image Link here</small> */}
                     </div>
 
                     <div className="mb-3 row">
                         <div className="offset-sm-4 col-sm-8">
-                            <button type="submit" className="btn btn-primary">Add Product</button>
+                            <button className="btn btn-primary" onClick={submitData}>Add Product</button>
                         </div>
                     </div>
                 </form>

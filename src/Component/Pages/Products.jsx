@@ -6,37 +6,56 @@ import SearchButton from '../SearchButton';
 
 
 function Products() {
-const[data, setData] = useState('');
+  const[data, setData] = useState('');
+  const[localData, setLocalData] = useState('');
 
-useEffect(()=>{
-    getProducts()
-}, [])
-    
-const getProducts = async ()=>{
+  useEffect(()=>{
+      getProducts()
+      // getLocalProducts()
+  }, [])
+      
+  const getProducts = async ()=>{
     try{
-          const products = await axios.get('https://dummyjson.com/products');
-       setData(products.data.products);
-}catch(err){
-    console.log(err)
-}
-}
-console.log('kay :' + data);
+      await axios.get('https://dummyjson.com/products?limit=4')
+      .then((response) => setData(response.data.products))
+    }catch(err){
+      console.log(err)
+    }
+  }
+
+  console.log('dammy: ',data)
+
+  const getLocalProducts = () => {
+    let getProduct = localStorage.getItem('products');
+    let parseProduct = JSON.parse(getProduct);
+    setLocalData(parseProduct);
+  }
+
 return (
     <>
-    <SearchButton />
+      <SearchButton />
 
-    <section className="product-container">
-    {data ?
-    
-    data.map((value, index)=>{
-    return(
-      <Product key={index} products ={value}  />
-     )
-    }):
-    <h2>Loading...</h2>
-     
-     }
-    </section>
+      <section className="product-container">
+        {/* {data ?
+          data.map((value, index)=>{
+            return(
+              <Product key={index} products={value} />
+            )
+          })
+          :
+          <h2>Loading...</h2>
+        }
+        {localData ?
+          localData.map((value, index)=>{
+            return(
+              <Product key={index} products={value} />
+            )
+          })
+          :
+          <h2>Loading...</h2>
+        } */}
+        
+      </section>
     </>
   )
 }

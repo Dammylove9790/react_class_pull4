@@ -5,19 +5,17 @@ import '../CSS/products.css';
 
 
 function SingleProduct(props) {
-  const [data, setData] = useState('');
-  
-  const {productId} = useParams();
-    // console.log(productId)
-    useEffect(()=>{
-      getSingleProduct()
-  }, [])
-  
-  
+  const [data, setData] = useState('')
+  const {productId} = useParams()
+
+  useEffect(()=>{
+    getSingleProduct()
+  }, []);
+
   const getSingleProduct = async () => {
     try {
       const response = await axios.get(`https://dummyjson.com/products/${productId}`);
-      setData(response.data);
+      setData(response.data)
     } catch (error) {
       console.log(error)
     }
@@ -49,7 +47,7 @@ function SingleProduct(props) {
         </div>
       </div>
     </div>
-  );
+  ) 
 }
 
 export default SingleProduct
